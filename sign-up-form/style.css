@@ -5,16 +5,34 @@
   --clr-neutral-100: hsl(210, 20%, 98%);
   --clr-neutral-300: hsl(210, 20%, 70%);
   --clr-neutral-900: hsl(210, 20%, 10%);
+  --clr-form: hsl(0, 0%, 100%);
+  --clr-form-shadow: hsla(0, 0%, 60%, 0.4);
+  --clr-input-border: hsl(220, 13%, 91%);
   --clr-tranparent: hsla(0, 0%, 0%, 0.442);
-  --clr-accent-400: hsl(92, 20%, 35%);
+  --clr-accent: 92, 20%, 35%;
+  --clr-accent-lighter: hsl(92, 20%, 45%);
+  --clr-accent-shadow: hsla(var(--clr-accent), 0.2);
+  --clr-hover: 224, 66%, 67%;
+  --clr-hover-shadow: hsla(var(--clr-hover), 0.1);
+  --clr-invalid: hsl(0, 53%, 52%);
 
   /* Fonts */
-  --font-family: ;
-  --fs-400: ;
-  --fs-500: ;
-  --fw-regular: ;
-  --fw-semi-bold: ;
-  --fw-bold: ;
+  
+  --main-font-family: 'Open Sans', sans-serif;
+  --fs-100: 0.8rem;
+  --fs-300: 1.25rem;
+  --fs-400: 1.5rem;
+  --fs-500: 1.6rem;
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semi-bold: 600;
+}
+
+/*  Imported Fonts */
+@font-face {
+  font-family: norse-bold;
+  src: url("public/fonts/Norse-Bold.otf");
 }
 
 /* Box sizing rules */
@@ -67,6 +85,10 @@ p, h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
 }
 
+em {
+  font-style: italic;
+}
+
 /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
@@ -81,37 +103,38 @@ p, h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* Overall page layout */
+
 body {
   display: grid;
   place-content: center;
-  margin: 1rem;
+  background-color: var(--clr-neutral-100);
 }
 
 container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;  
+  grid-template-columns: 0.5fr 1fr;
+  align-items: center; 
+  height: 100vh; 
+  height: 100svh;
 }
+
+/* SIDEBAR */
 
 sidebar {
   position: relative;
-  background-image: url("images/bground-img.jpg");
+  background-image: url("public/images/bground-img.jpg");
   background-size: cover;
   background-position: center center;
   color: var(--clr-neutral-100);
-  height: 800px;
+  height: 100%;
   text-align: center;
-}
-
-@font-face {
-  font-family: norse-bold;
-  src: url("fonts/Norse-Bold.otf");
 }
 
 .logo-container {
   --logo-size: 7rem;
   --logo-padding: 1rem;
-  --logo-top-margin: 30%;
+  --logo-top-margin: 20%;
 
   display: flex;
   align-items: center;
@@ -125,7 +148,7 @@ sidebar {
   font-size: var(--logo-size);
 }
 
-.logo-img {
+.logo-img {--fs-100
   height: var(--logo-size);
 }
 
@@ -133,6 +156,10 @@ sidebar {
   position: absolute;
   bottom: 0; 
   left: 0; right: 0;
+  padding-bottom: 0.75rem;
+  font-family: var(--main-font-family);
+  font-size: var(--fs-300);
+  font-weight: var(--fw-regular);
 }
 
 .credit a {
@@ -144,33 +171,139 @@ sidebar {
   color: var(--clr-neutral-300); 
 }
 
+/* MAIN */
+
 main {
   background-color: var(--clr-neutral-100);
   color: var(--clr-neutral-900);
-  height: 800px;
-  align-items: center;
+
+  font-family: var(--main-font-family);
+  
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: center;
+  
+  height: 800px;
+}
+
+.sign-up-description,
+.sign-up-form-container h2 {
+  font-weight: var(--fw-semi-bold);
+  font-size: var(--fs-500);
+}
+--fs-100
+.log-in-container {
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-300);
+}
+
+.sign-up-description,
+.log-in-container,
+.sign-up-form-container h2,
+.sign-up-form-container form {
+  padding-left: 2rem;
+}
+
+.sign-up-description {
   display: grid;
+  gap: 1.5rem;
+  width: 75%;
+  margin-bottom: 3rem;
 }
 
-main button {
-  background-color: var(--clr-accent-400);
-  color: var(--clr-neutral-100)
-}
+/* Form */
 
-.sign-up-form {
+.sign-up-form-container {
   background-color: #fff;
-  padding: 2rem;
+  min-width: 100%;
+  margin-bottom: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+  box-shadow: var(--clr-form-shadow) 0px 4px 8px;
 }
 
 form {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  width: 60%;
+  column-gap: 2rem;
+  row-gap: 1rem;
+  padding-top: 1rem;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
   
 }
 
-form label {
+/* form label {
   position: absolute;
-  
+} */
+
+input {
+  appearance: none;
+  border: 1px solid var(--clr-input-border);
+  border-radius: 3px;
 }
+
+input:not(:placeholder-shown):not(:focus):invalid {
+  border-color: var(--clr-invalid);
+}
+
+input:hover,
+input:focus {
+  outline: none;
+  border: 1px solid hsl(var(--clr-hover));
+  box-shadow: var(--clr-hover-shadow) 2px 3px 2px;
+}
+
+.form-input {
+  position: relative;
+}
+
+.error::after {
+  content: '* Passwords do not match';
+  font-size: var(--fs-100);
+  color: var(--clr-invalid);
+  position: absolute;
+  left: 0;
+  bottom: -40%;
+}
+
+/* Buttons */
+
+.create-account-btn {
+  background-color: hsl(var(--clr-accent));
+  color: var(--clr-neutral-100);
+  border: none;
+  border-radius: 6px;
+  box-shadow: var(--clr-accent-shadow) 2px 4px 2px;
+
+  padding: 0.5em 3em 0.5em 3em;
+  font-weight: var(--fw-semi-bold);
+  margin-bottom: 1rem;
+
+  transform: scale(1);
+  transition: transform 0.2s;
+}
+.create-account-btn:hover,
+.create-account-btn:focus {
+  background-color: var(--clr-accent-lighter);
+  transform: scale(1.05);
+  transition: transform 0.2s;
+} 
+
+.log-in-btn {
+  text-decoration: none;
+  font-weight: var(--fw-semi-bold);
+  color: hsl(var(--clr-accent));
+}
+  
+.log-in-btn:hover,
+.log-in-btn:focus {
+  color: var(--clr-accent-lighter);
+}
+
+
